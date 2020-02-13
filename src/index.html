@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>White code</title>
+  <link rel="stylesheet" href="css/main.css">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&amp;subset=cyrillic" rel="stylesheet">
+</head>
+<body>
+<header class="page-header">
+  <h1 class="page-header__caption">WHITE CODE</h1>
+</header>
+
+
+<section class="page-section">
+    <div class="page-section__cart-wrapper">
+      <h2 class="page-section__caption">НАЙДЕНО 3000 ТОВАРОВ</h2>
+      <div class="page-section__cart" href="/">
+        <img class="page-section__cart-icon" src="../../img/cart.svg">
+         <div id="cart" class="close">
+           <div class="page-section__total"></div>
+         </div>
+      </div>
+
+      <button id="checkout" class="page-section__btn-small">Корзина</button>
+      <button id="clear_cart" class="page-section__btn-small">Очистить корзину</button>
+    </div>
+
+
+    <div class="page-section__sort">
+          <span class="page-section__sort-capt">
+          Сортировать по: </span>
+      <span class="page-section__sort-price" id="price" onclick="sortBy('price')">Цене</span>
+      <span class="page-section__sort-name" id="name" onclick="sortBy('title')">Названию</span>
+      <input type="checkbox" id="check" name="checkbox" onclick="checkCheckbox()">
+    </div>
+
+
+  <!--контейнер для карточки товара-->
+  <div id="container" class="container">
+  </div>
+
+
+  <button class="page-section__btn" id="show-more" onclick="loadMore()">ПОКАЗАТЬ ЕЩЕ 15</button>
+</section>
+
+
+<footer class="page-footer">
+
+</footer>
+<script src="js/main.js"></script>
+<script src="js/common.js"></script>
+<script>
+  function checkWrapper() {
+    const wr = document.querySelectorAll('.wrapper');
+
+    if (wr !== undefined) {
+      if (wr.length > 0) {
+        const js = document.createElement("script");
+
+        js.type = "text/javascript";
+        js.src = "js/cart.js";
+
+        document.body.appendChild(js);
+      } else {
+        setTimeout(checkWrapper, 500);
+      }
+    } else {
+      setTimeout(checkWrapper, 500);
+    }
+  }
+
+  checkWrapper();
+</script>
+</body>
+</html>
+

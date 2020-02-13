@@ -1,0 +1,150 @@
+@import 'vars';
+
+.page-section {
+  margin: 0 auto;
+
+
+  &__cart-wrapper {
+    margin: 0 auto;
+    max-width: $mobile-width;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__caption {
+    font-size: 15px;
+    color: #7c9493;
+  }
+
+  &__cart {
+    display: flex;
+    justify-content: center;
+    text-decoration: none;
+    color: #000000;
+    align-self: center;
+  }
+
+  &__cart-icon {
+    width: 15px;
+    height: 25px;
+    margin-right: 10px;
+  }
+
+  &__cart-name {
+    font-size: 15px;
+    line-height: 25px;
+    vertical-align: middle;
+
+    @media(min-width: 1280px){
+      font-size: 20px;
+    }
+
+  }
+
+  &__sort {
+    font-size: 14px;
+    color: #7c9493;
+    margin: 0 auto;
+    max-width: $mobile-width;
+    position: relative;
+    left: 10px;
+    top: 40px;
+  }
+
+  &__sort-capt {
+    padding-right: 12px;
+  }
+
+
+  &__sort-price,
+  &__sort-name {
+    padding-right: 5px;
+    cursor: pointer;
+  }
+
+  &__sort-style {
+    color: #002f2f;
+    border-bottom: 2px dotted #002f2f;
+  }
+
+
+  &__btn {
+    width: 300px;
+    height: 50px;
+    color: #000000;
+    font-size: 12px;
+    font-weight: 600;
+    position: relative;
+    left: 50%;
+    transform: translate(-50%, 0);
+    top: -80px;
+  }
+
+  &__btn:hover {
+    color: lightslategray;
+  }
+
+  &__btn-small{
+    max-height: 30px;
+  }
+}
+
+.close {
+  display: none;
+}
+
+@media(min-width: 768px) {
+
+  .page-section {
+    &__cart-wrapper {
+      max-width: $tablet-width;
+    }
+
+
+    &__caption {
+      font-size: 25px;
+    }
+
+    &__sort {
+      max-width: $tablet-width;
+    }
+
+    &__btn {
+      width: 400px;
+      height: 60px;
+      font-size: 13px;
+
+    }
+  }
+}
+
+
+@media(min-width: 1280px) {
+
+  .page-section {
+    &__cart-wrapper {
+      max-width: 1280px;
+    }
+
+    &__caption {
+      font-size: 30px;
+      padding-left: 107px;
+    }
+
+    &__sort {
+      max-width: 1280px;
+    }
+
+    &__sort-capt {
+      padding-left: 107px;
+    }
+
+    &__btn {
+      width: 534px;
+      height: 73px;
+      font-size: 14px;
+      top: -120px;
+    }
+
+  }
+}

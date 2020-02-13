@@ -1,0 +1,24 @@
+.page-header {
+  margin: 30px auto;
+  display: flex;
+  justify-content: center;
+
+
+
+  &__caption {
+    text-align: center;
+    font-size: 30px;
+    border: 2px solid #7c9493;
+    width: 350px;
+    height: 50px;
+    padding: 10px;
+
+    @media(min-width: 768px) {
+     font-size: 40px;
+    }
+
+    @media(min-width: 1280px) {
+      font-size: 50px;
+    }
+  }
+}

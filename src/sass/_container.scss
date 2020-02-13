@@ -1,0 +1,26 @@
+@import "vars";
+
+.container {
+  max-width: $mobile-width;
+  margin: 0 auto;
+  background-color: #fffefd;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 50px 4px;
+}
+
+@media(min-width: 768px) {
+  .container {
+    max-width: $tablet-width;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}
+
+@media(min-width: 1280px) {
+  .container {
+    max-width: 1066px;
+    padding: 88px 107px 130px 107px;
+  }
+}
