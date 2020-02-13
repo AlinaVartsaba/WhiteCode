@@ -1,0 +1,1 @@
+function readTextFile(t,e){const a=new XMLHttpRequest;a.overrideMimeType("application/json"),a.onreadystatechange=function(){4===a.readyState&&200===a.status&&e(a.responseText)},a.open("GET",t,!1),a.send()}function getCartData(){return JSON.parse(localStorage.getItem("cart"))}function setCartData(t){return localStorage.setItem("cart",JSON.stringify(t)),!1}

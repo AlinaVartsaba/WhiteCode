@@ -1,80 +1,70 @@
-const sass = require('gulp-sass');
-const browserSync = require('browser-sync');
-const concat = require('gulp-concat');
-const uglify = require('gulp-uglifyjs');
-const cssnano = require('gulp-cssnano');
-const rename = require('gulp-rename');
-const del = require('del');
-const imagemin = require('gulp-imagemin');
-const pngquant = require('imagemin-pngquant');
-const cache = require('gulp-cache');
-const autoprefixer = require('gulp-autoprefixer');
-const { src, dest, parallel, series, watch } = require('gulp');
+const gulp = require("gulp");
+const sass = require("gulp-sass");
+const browserSync = require("browser-sync").create();
+const minify = require("gulp-minify");
 
-function scss() {
-  return src('src/sass/**/*.scss')
-    .pipe(sass())
-    .pipe(autoprefixer(['last 15 versions', '> 1%', 'ie 8', 'ie 7'], {
-      cascade: true
-    }))
-    .pipe(dest('src/css'))
-    .pipe(browserSync.reload( {stream: true}));
+const htmlSrc = "./src/*.html";
+const styleSrc = "./src/sass/*.scss";
+const jsSrc = "./src/js/*.js";
+
+const htmlDest = "./dist/";
+const styleDest = "./dist/css/";
+const jsDest = "./dist/js/";
+
+// ############################
+// Tasks
+// ############################
+
+function browser_sync() {
+    browserSync.init({
+        server: {
+            baseDir: "./dist/"
+        }
+    });
 }
 
-function scripts() {
-  return src('src/libs/jquery/dist/jquery.min.js', { allowEmpty: true })
-    .pipe(concat('libs.min.js'))
-    .pipe(uglify())
-    .pipe(dest('src/js'));
+function reload(done) {
+    browserSync.reload();
+    done();
 }
 
-// BrowserSync
-function browsersync(cb) {
-  browserSync({
-    server: {
-      baseDir: 'src'
-    },
-    notify: false
-  });
-  cb();
+function css() {
+    return gulp
+        .src(styleSrc)
+        .pipe(
+            sass({
+                errLogToConsole: true,
+                outputStyle: "compressed"
+            })
+        )
+        .on("error", console.error.bind(console))
+        .pipe(gulp.dest(styleDest))
+        .pipe(browserSync.stream());
 }
 
-function browserReload(cb) {
-  clearCache();
-  browserSync.reload();
-  cb();
+function html() {
+    return gulp.src(htmlSrc).pipe(gulp.dest(htmlDest));
 }
 
-function clean() {
-  return del('dist');
+function js() {
+    return gulp
+        .src(jsSrc)
+        .pipe(minify())
+        .pipe(gulp.dest(jsDest));
 }
 
-function clearCache() {
-  return cache.clearAll();
+function watch_files() {
+    gulp.watch(styleSrc).on("change", gulp.series(css, reload));
+    gulp.watch(htmlSrc).on("change", gulp.series(html, reload));
+    gulp.watch(jsSrc).on("change", gulp.series(js, reload));
 }
 
-function img() {
-  return src('src/img/**')
-    .pipe(cache(imagemin({
-      interlaced: true,
-      progressive: true,
-      svgoPlugins: [{removeViewBox: false}],
-      use: [pngquant()]
-    })))
-    .pipe(dest('dist/img'));
-}
+gulp.task("css", css);
+gulp.task("html", html);
+gulp.task("js", js);
 
-function watchFiles(cb) {
-  watch(['src/sass/**/*.scss'], parallel(scss));
-  watch(['src/img/**'], series(img, browserReload));
-  watch(['src/*.html', 'src/js/**/*.js'], series(browserReload));
-  cb();
-}
+// Default task: watch and build
+gulp.task("default", gulp.parallel(css, html, js, browser_sync, watch_files));
 
-const build = gulp.series(clean, gulp.parallel(scss, img, scripts));
-
-
-// exports.build = building;
-exports.watch = series(clean, scss, img, scripts, browsersync, watchFiles);
-exports.scss = scss;
-exports.build = build;
+// Build project to dist/
+gulp.task("build", gulp.series(css, html, js));
